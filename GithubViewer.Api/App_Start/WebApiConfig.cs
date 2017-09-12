@@ -1,4 +1,5 @@
 ﻿using System.Web.Http;
+using GithubViewer.Utils.Extensions;
 
 namespace GithubViewer.Api
 {
@@ -10,17 +11,13 @@ namespace GithubViewer.Api
 
             // Web API routes
             config.MapHttpAttributeRoutes();
+            config.AddGithubViewerFormatters();
+
 
             //config.Routes.MapHttpRoute(
             //    name: "DefaultApi",
             //    routeTemplate: "api/{controller}/{id}",
             //    defaults: new { id = RouteParameter.Optional }
-            //);
-
-            //config.Routes.MapHttpRoute(
-            //    name: "DefaultApi",
-            //    routeTemplate: "api/{controller}/{login}",
-            //    defaults: new { login = RouteParameter.Optional }
             //);
         }
     }

@@ -7,6 +7,7 @@ namespace GithubViewer.Api
     {
         protected void Application_Start()
         {
+            UnityConfig.RegisterComponents();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
         }

@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Linq;
 using GithubViewer.Models;
 
 namespace GithubViewer.Utils.Formatters
@@ -18,7 +19,7 @@ namespace GithubViewer.Utils.Formatters
             {
                 writer.WriteLine($";;;;;{repository.Id};{repository.Name};{repository.Language};{repository.StargazesCount}");
             }
-            if(user.StarredRepositoryList == null && user.StarredRepositoryList.Count == 0)
+            if(user.StarredRepositoryList == null && !user.StarredRepositoryList.Any())
                 return;
 
             writer.WriteLine(";;;;;Starred repositories");

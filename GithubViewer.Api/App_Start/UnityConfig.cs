@@ -1,25 +1,29 @@
 using System.Web.Configuration;
 using Microsoft.Practices.Unity;
 using System.Web.Http;
-using GithubViewer.Api.Domain;
-using GithubViewer.Api.Services;
 using GithubViewer.Utils.Domain;
 using GithubViewer.Utils.Services;
 using Unity.WebApi;
 
 namespace GithubViewer.Api
 {
+    /// <summary>
+    /// Configuration class for unity DI
+    /// </summary>
     public static class UnityConfig
     {
+        /// <summary>
+        /// Registering all needed components
+        /// </summary>
         public static void RegisterComponents()
         {
 			var container = new UnityContainer();
 
-            container.RegisterType<IWebApiClient, WebApiClientService>
-                (new InjectionConstructor(WebConfigurationManager.AppSettings.Get("GithubApiUrl")));
-            container.RegisterType<IGithubViewerService, GithubViewerService>();
+            container.RegisterType<IGithubApiService, GithubApiService>();
             container.RegisterType<ISerializer, JsonSerializerService>();
-            
+            container.RegisterType<WebApiClientService, WebApiClientService>
+                (new InjectionConstructor(WebConfigurationManager.AppSettings.Get("GithubApiUrl")));
+            container.RegisterInstance<IWebApiClient>(new WebApiClientCache(container.Resolve<WebApiClientService>()));
 
             GlobalConfiguration.Configuration.DependencyResolver = new UnityDependencyResolver(container);
         }

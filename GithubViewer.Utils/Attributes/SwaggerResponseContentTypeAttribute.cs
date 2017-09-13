@@ -14,7 +14,7 @@ namespace GithubViewer.Utils.Attributes
     {
         /// <inheritdoc />
         /// <summary>
-        /// SwaggerResponseContentTypeAttribute
+        /// SwaggerResponseContentTypeAttribute ctor
         /// </summary>
         /// <param name="responseType"></param>
         public SwaggerResponseContentTypeAttribute(string responseType)

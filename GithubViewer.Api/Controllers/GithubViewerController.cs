@@ -1,11 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web.Http;
 using System.Web.Http.Description;
-using GithubViewer.Api.Domain;
 using GithubViewer.Models;
+using GithubViewer.Models.Examples;
 using GithubViewer.Utils.Attributes;
+using GithubViewer.Utils.Domain;
+using Swashbuckle.Examples;
 
 namespace GithubViewer.Api.Controllers
 {
@@ -16,14 +18,14 @@ namespace GithubViewer.Api.Controllers
     [RoutePrefix("api/githubviewer")]
     public class GithubViewerController : ApiController
     {
-        private readonly IGithubViewerService _controllerService;
+        private readonly IGithubApiService _controllerService;
 
         /// <inheritdoc />
         /// <summary>
         /// Ctor for controller
         /// </summary>
         /// <param name="controllerService">Service which connects to Github Api</param>
-        public GithubViewerController(IGithubViewerService controllerService)
+        public GithubViewerController(IGithubApiService controllerService)
         {
             _controllerService = controllerService;
         }
@@ -41,6 +43,7 @@ namespace GithubViewer.Api.Controllers
         [Route("user/{login}")]
         [ResponseType(typeof(GithubUser))]
         [SwaggerResponseContentType("text/simplecsv")]
+        [SwaggerResponseExample(HttpStatusCode.OK, typeof(GithubUserExamples))]
         public IHttpActionResult GetUser(string login)
         {
             var model = _controllerService.GetUser(login);
@@ -50,7 +53,7 @@ namespace GithubViewer.Api.Controllers
         }
 
         /// <summary>
-        /// Github user repositories
+        /// Github users repositories
         /// </summary>
         /// <remarks>
         /// Get detailed repository list of given Github user
@@ -59,9 +62,10 @@ namespace GithubViewer.Api.Controllers
         /// <returns>Github User repositories list</returns>
         /// <response code="200">Returns Github user repositories list</response>
         /// <response code="404">Github User not found</response>
-        [Route("user/{login}/repos")]
+        [Route("repository/{login}")]
         [ResponseType(typeof(IEnumerable<GithubRepositoryDetails>))]
         [SwaggerResponseContentType("text/simplecsv")]
+        [SwaggerResponseExample(HttpStatusCode.OK, typeof(GithubRepositoryDetailsExamples))]
         public IHttpActionResult GetUsersRepositories(string login)
         {
             var model = _controllerService.GetUser(login);
@@ -74,7 +78,7 @@ namespace GithubViewer.Api.Controllers
         }
 
         /// <summary>
-        /// Get information about given Github users repository
+        /// Github users repository
         /// </summary>
         /// <remarks>
         /// Get information about given Github users repository
@@ -84,9 +88,10 @@ namespace GithubViewer.Api.Controllers
         /// <returns>Github Users repository information</returns>
         /// <response code="200">Returns Github users repository information</response>
         /// <response code="404">Github User or repository not found</response>
-        [Route("user/{login}/{repository}")]
+        [Route("repository/{login}/{repository}")]
         [ResponseType(typeof(GithubRepositoryDetails))]
         [SwaggerResponseContentType("text/simplecsv")]
+        [SwaggerResponseExample(HttpStatusCode.OK, typeof(GithubRepositoryDetailsExamples))]
         public IHttpActionResult GetRepositoryDetails(string login, string repository)
         {
             var model = _controllerService.GetRepositoryDetails(login, repository);

@@ -7,12 +7,22 @@ namespace GithubViewer.Utils.Services
     {
         public string Serialize<T>(T objectToSerialize)
         {
-            return JsonConvert.SerializeObject(objectToSerialize);
+            var serializedString = JsonConvert.SerializeObject(objectToSerialize);
+            return serializedString == "null" ? string.Empty : serializedString;
         }
 
         public T Deserialize<T>(string stringToDeserialize)
         {
-            return JsonConvert.DeserializeObject<T>(stringToDeserialize);
+            var obj = default(T);
+            try
+            {
+                obj = JsonConvert.DeserializeObject<T>(stringToDeserialize);
+            }
+            catch
+            {
+                // ignored
+            }
+            return obj;
         }
     }
 }

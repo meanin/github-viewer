@@ -10,30 +10,48 @@ namespace GithubViewer.Utils.Services
     {
         public string Serialize<T>(T objectToSerialize)
         {
-            var settings = new XmlWriterSettings
+            var serializedString = string.Empty;
+            try
             {
-                OmitXmlDeclaration = false,
-                Indent = false,
-                NewLineHandling = NewLineHandling.None,
-                Encoding = new UTF8Encoding(false)
-            };
+                var settings = new XmlWriterSettings
+                {
+                    OmitXmlDeclaration = false,
+                    Indent = false,
+                    NewLineHandling = NewLineHandling.None,
+                    Encoding = new UTF8Encoding(false)
+                };
 
-            var namespaces = new XmlSerializerNamespaces();
-            namespaces.Add(string.Empty, string.Empty);
+                var namespaces = new XmlSerializerNamespaces();
+                namespaces.Add(string.Empty, string.Empty);
 
-            var stringWriter = new StringWriter();
+                var stringWriter = new StringWriter();
 
-            var writer = XmlWriter.Create(stringWriter, settings);
-            var serializer = new XmlSerializer(objectToSerialize.GetType());
+                var writer = XmlWriter.Create(stringWriter, settings);
+                var serializer = new XmlSerializer(objectToSerialize.GetType());
 
-            serializer.Serialize(writer, objectToSerialize, namespaces);
-            return stringWriter.ToString();
+                serializer.Serialize(writer, objectToSerialize, namespaces);
+                serializedString = stringWriter.ToString();
+            }
+            catch
+            {
+                // ignored
+            }
+            return serializedString;
         }
 
         public T Deserialize<T>(string stringToDeserialize)
         {
-            return (T) new XmlSerializer(typeof(T)).
-                Deserialize(new StringReader(stringToDeserialize));
+            var obj = default(T);
+            try
+            {
+                obj = (T)new XmlSerializer(typeof(T)).
+                    Deserialize(new StringReader(stringToDeserialize));
+            }
+            catch
+            {
+                // ignored
+            }
+            return obj;
         }
     }
 }

@@ -53,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attributes\SwaggerResponseContentTypeAttribute.cs" />
+    <Compile Include="Domain\IGithubApiService.cs" />
     <Compile Include="Domain\ISerializer.cs" />
     <Compile Include="Domain\IWebApiClient.cs" />
     <Compile Include="Extensions\HttpConfigurationExtensions.cs" />
@@ -62,8 +63,10 @@
     <Compile Include="Formatters\GithubUserCsvFormatter.cs" />
     <Compile Include="Formatters\GithubViewerCsvFormatterBase.cs" />
     <Compile Include="GithubApiMethodAppendixBuilder.cs" />
+    <Compile Include="Services\GithubApiService.cs" />
     <Compile Include="Services\JsonSerializerService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\WebApiClientCache.cs" />
     <Compile Include="Services\WebApiClientService.cs" />
     <Compile Include="Services\XmlSerializerService.cs" />
   </ItemGroup>

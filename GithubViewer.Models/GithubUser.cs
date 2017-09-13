@@ -36,11 +36,11 @@ namespace GithubViewer.Models
         /// <summary>
         /// Users starred repository list
         /// </summary>
-        public List<GithubRepository> StarredRepositoryList { get; set; }
+        public IEnumerable<GithubRepository> StarredRepositoryList { get; set; }
         /// <summary>
         /// Users repository list
         /// </summary>
-        public List<GithubRepository> RepositoryList { get; set; }
+        public IEnumerable<GithubRepository> RepositoryList { get; set; }
 
         [JsonIgnore]
         public static GithubUser NullUser = new GithubUser {Login = "No user"};

@@ -1,17 +1,15 @@
 ﻿using System.Collections.Generic;
-using GithubViewer.Api.Domain;
 using GithubViewer.Models;
-using GithubViewer.Utils;
 using GithubViewer.Utils.Domain;
 
-namespace GithubViewer.Api.Services
+namespace GithubViewer.Utils.Services
 {
-    public class GithubViewerService : IGithubViewerService
+    public class GithubApiService : IGithubApiService
     {
         private readonly IWebApiClient _client;
         private readonly ISerializer _serializer;
 
-        public GithubViewerService(IWebApiClient client, ISerializer serializer)
+        public GithubApiService(IWebApiClient client, ISerializer serializer)
         {
             _client = client;
             _serializer = serializer;
@@ -19,8 +17,8 @@ namespace GithubViewer.Api.Services
 
         public GithubUser GetUser(string login)
         {
-            var contentContent = _client.Get(GithubApiMethodAppendixBuilder.GetUserMethod(login));
-            var githubUser = _serializer.Deserialize<GithubUser>(contentContent);
+            var content = _client.Get(GithubApiMethodAppendixBuilder.GetUserMethod(login));
+            var githubUser = _serializer.Deserialize<GithubUser>(content);
 
             if (githubUser == null)
                 return GithubUser.NullUser;
@@ -36,8 +34,8 @@ namespace GithubViewer.Api.Services
 
         public GithubRepositoryDetails GetRepositoryDetails(string login, string repositoryName)
         {
-            var contentContent = _client.Get(GithubApiMethodAppendixBuilder.GetRepositoryDetailsMethod(login, repositoryName));
-            var repositoryDetails = _serializer.Deserialize<GithubRepositoryDetails>(contentContent);
+            var content = _client.Get(GithubApiMethodAppendixBuilder.GetRepositoryDetailsMethod(login, repositoryName));
+            var repositoryDetails = _serializer.Deserialize<GithubRepositoryDetails>(content);
 
             return repositoryDetails ?? GithubRepositoryDetails.NullDetails;
         }

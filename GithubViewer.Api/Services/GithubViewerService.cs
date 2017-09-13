@@ -39,7 +39,7 @@ namespace GithubViewer.Api.Services
             var contentContent = _client.Get(GithubApiMethodAppendixBuilder.GetRepositoryDetailsMethod(login, repositoryName));
             var repositoryDetails = _serializer.Deserialize<GithubRepositoryDetails>(contentContent);
 
-            return repositoryDetails;
+            return repositoryDetails ?? GithubRepositoryDetails.NullDetails;
         }
     }
 }

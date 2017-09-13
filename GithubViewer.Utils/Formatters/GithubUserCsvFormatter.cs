@@ -1,7 +1,5 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using GithubViewer.Models;
-using GithubViewer.Utils.Extensions;
 
 namespace GithubViewer.Utils.Formatters
 {

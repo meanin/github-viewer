@@ -10,6 +10,7 @@ namespace GithubViewer.Api
             UnityConfig.RegisterComponents();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
+            SwaggerConfig.Register();
         }
     }
 }

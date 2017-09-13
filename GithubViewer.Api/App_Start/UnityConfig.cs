@@ -19,11 +19,13 @@ namespace GithubViewer.Api
         {
 			var container = new UnityContainer();
 
+            container.RegisterInstance<ICache<string>>(new StringCache());
             container.RegisterType<IGithubApiService, GithubApiService>();
             container.RegisterType<ISerializer, JsonSerializerService>();
-            container.RegisterType<WebApiClientService, WebApiClientService>
-                (new InjectionConstructor(WebConfigurationManager.AppSettings.Get("GithubApiUrl")));
-            container.RegisterInstance<IWebApiClient>(new WebApiClientCache(container.Resolve<WebApiClientService>()));
+            container.RegisterType<IWebApiClient, WebApiClientService>
+                (new InjectionConstructor(
+                    WebConfigurationManager.AppSettings.Get("GithubApiUrl"), 
+                    container.Resolve<ICache<string>>()));
 
             GlobalConfiguration.Configuration.DependencyResolver = new UnityDependencyResolver(container);
         }

@@ -5,7 +5,7 @@ namespace GithubViewer.Api
     /// <summary>
     /// Configuration class for flitering
     /// </summary>
-    public class FilterConfig
+    public static class FilterConfig
     {
         /// <summary>
         /// Registering filers

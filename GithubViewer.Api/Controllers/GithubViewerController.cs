@@ -7,6 +7,7 @@ using GithubViewer.Models;
 using GithubViewer.Models.Examples;
 using GithubViewer.Utils.Attributes;
 using GithubViewer.Utils.Domain;
+using Serilog;
 using Swashbuckle.Examples;
 
 namespace GithubViewer.Api.Controllers
@@ -46,9 +47,11 @@ namespace GithubViewer.Api.Controllers
         [SwaggerResponseExample(HttpStatusCode.OK, typeof(GithubUserExamples))]
         public IHttpActionResult GetUser(string login)
         {
+            Log.Verbose("Received get user reuqest with login: {login}", login);
             var model = _controllerService.GetUser(login);
             if (model != GithubUser.NullUser)
                 return Ok(model);
+            Log.Warning("User not found", login);
             return NotFound();
         }
 
@@ -68,9 +71,13 @@ namespace GithubViewer.Api.Controllers
         [SwaggerResponseExample(HttpStatusCode.OK, typeof(GithubRepositoryDetailsExamples))]
         public IHttpActionResult GetUsersRepositories(string login)
         {
+            Log.Verbose("Received get users repositories reuqest with login: {login}", login);
             var model = _controllerService.GetUser(login);
             if (model == GithubUser.NullUser)
+            {
+                Log.Warning("User not found");
                 return NotFound();
+            }
 
             var repositoriesList = model.RepositoryList
                 .Select(repository => _controllerService.GetRepositoryDetails(login, repository.Name));
@@ -94,9 +101,11 @@ namespace GithubViewer.Api.Controllers
         [SwaggerResponseExample(HttpStatusCode.OK, typeof(GithubRepositoryDetailsExamples))]
         public IHttpActionResult GetRepositoryDetails(string login, string repository)
         {
+            Log.Verbose("Received get users repository reuqest with login: {login} and repository name: {repository}", login, repository);
             var model = _controllerService.GetRepositoryDetails(login, repository);
             if (model != GithubRepositoryDetails.NullDetails)
                 return Ok(model);
+            Log.Verbose("User or given repository not found");
             return NotFound();
         }
     }

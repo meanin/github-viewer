@@ -1,5 +1,7 @@
 ﻿using System.Web.Http;
 using GithubViewer.Utils.Formatters;
+using GithubViewer.Utils.Handlers;
+using Serilog;
 
 namespace GithubViewer.Utils.Extensions
 {
@@ -17,6 +19,11 @@ namespace GithubViewer.Utils.Extensions
             config.Formatters.Add(new GithubUserCsvFormatter());
             config.Formatters.Add(new GithubRepositoryCsvFormatter());
             config.Formatters.Add(new GithubRepositoryDetailsCsvFormatter());
+        }
+
+        public static void AddLogMessageHandler(this HttpConfiguration config)
+        {
+            config.MessageHandlers.Add(new LogMessageHandler());
         }
     }
 }

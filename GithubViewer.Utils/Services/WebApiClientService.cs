@@ -28,19 +28,22 @@ namespace GithubViewer.Utils.Services
             if (cachedObject != string.Empty)
                 return cachedObject;
 
-            var result = string.Empty;
+            var result = GetMethodContentResult(method);
+            _cache.Put(method, result);
+            return result;
+        }
+
+        private string GetMethodContentResult(string method)
+        {
             using (var client = new HttpClient())
             {
                 var methodUri = new Uri(_webApiDomain, method);
                 client.DefaultRequestHeaders.Add("User-Agent", "*");
                 var response = client.GetAsync(methodUri).Result;
-                if (!response.IsSuccessStatusCode)
-                    return result;
-
-                result = response.Content.ReadAsStringAsync().Result;
-                _cache.Put(method, result);
+                return !response.IsSuccessStatusCode
+                    ? string.Empty 
+                    : response.Content.ReadAsStringAsync().Result;
             }
-            return result;
         }
     }
 }

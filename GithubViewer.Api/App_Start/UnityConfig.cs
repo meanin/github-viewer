@@ -8,6 +8,7 @@ using Serilog;
 using Serilog.Events;
 using System.IO;
 using System;
+using Serilog.Core;
 
 namespace GithubViewer.Api
 {
@@ -28,19 +29,24 @@ namespace GithubViewer.Api
             container.RegisterType<ISerializer, JsonSerializerService>();
             var httpLogPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "httplogs", "log-{Date}.txt");
             var logPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "logs", "log-{Date}.txt");
-            Log.Logger = new LoggerConfiguration().MinimumLevel.Verbose()
-                            .WriteTo.Logger(l => l.Filter.ByIncludingOnly(e => e.Properties.ContainsKey("LogMessageHandler"))
-                                            .WriteTo.RollingFile(httpLogPath, LogEventLevel.Verbose))
-                            .WriteTo.Logger(l => l.Filter.ByExcluding(e => e.Properties.ContainsKey("LogMessageHandler"))
-                                            .WriteTo.RollingFile(logPath, LogEventLevel.Verbose))
-                        .CreateLogger();
+            Log.Logger = CreateLogger(httpLogPath, logPath);
 
+            var githubApiUrl = WebConfigurationManager.AppSettings.Get("GithubApiUrl") ?? string.Empty;
             container.RegisterType<IWebApiClient, WebApiClientService>
-                (new InjectionConstructor(
-                    WebConfigurationManager.AppSettings.Get("GithubApiUrl"), 
+                (new InjectionConstructor(githubApiUrl, 
                     container.Resolve<ICache<string>>()));
 
             GlobalConfiguration.Configuration.DependencyResolver = new UnityDependencyResolver(container);
+        }
+
+        private static Logger CreateLogger(string httpLogPath, string logPath)
+        {
+            return new LoggerConfiguration().MinimumLevel.Verbose()
+                .WriteTo.Logger(l => l.Filter.ByIncludingOnly(e => e.Properties.ContainsKey("LogMessageHandler"))
+                    .WriteTo.RollingFile(httpLogPath, LogEventLevel.Verbose))
+                .WriteTo.Logger(l => l.Filter.ByExcluding(e => e.Properties.ContainsKey("LogMessageHandler"))
+                    .WriteTo.RollingFile(logPath, LogEventLevel.Verbose))
+                .CreateLogger();
         }
     }
 }

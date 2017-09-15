@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GithubViewer.Utils", "Githu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GithubViewer.Utils.Tests", "GithubViewer.Utils.Tests\GithubViewer.Utils.Tests.csproj", "{5E2F0F60-2907-4160-A894-29FB36562EDB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GithubViewer.Api.Tests", "GithubViewer.Api.Tests\GithubViewer.Api.Tests.csproj", "{556072E1-A0DC-40DD-A5CA-52033CA1E8BF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +45,10 @@ Global
 		{5E2F0F60-2907-4160-A894-29FB36562EDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5E2F0F60-2907-4160-A894-29FB36562EDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5E2F0F60-2907-4160-A894-29FB36562EDB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{556072E1-A0DC-40DD-A5CA-52033CA1E8BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{556072E1-A0DC-40DD-A5CA-52033CA1E8BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{556072E1-A0DC-40DD-A5CA-52033CA1E8BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{556072E1-A0DC-40DD-A5CA-52033CA1E8BF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -53,6 +59,7 @@ Global
 		{8D6D3148-EC70-4566-ABD9-C8EBFD065648} = {9D2C472C-19E0-4DF2-932F-8E06EA1E97A2}
 		{CD3D733C-DDB9-4AAB-9E5D-6BBC12DB5D63} = {9D2C472C-19E0-4DF2-932F-8E06EA1E97A2}
 		{5E2F0F60-2907-4160-A894-29FB36562EDB} = {5F9C6747-3EE5-4203-8006-AFFD79B80239}
+		{556072E1-A0DC-40DD-A5CA-52033CA1E8BF} = {5F9C6747-3EE5-4203-8006-AFFD79B80239}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3EF4BC06-4692-495A-8907-EFE25465730E}

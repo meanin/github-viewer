@@ -10,7 +10,6 @@ namespace GithubViewer.Utils.Services
     {
         public string Serialize<T>(T objectToSerialize)
         {
-            var serializedString = string.Empty;
             try
             {
                 var settings = new XmlWriterSettings
@@ -30,28 +29,25 @@ namespace GithubViewer.Utils.Services
                 var serializer = new XmlSerializer(objectToSerialize.GetType());
 
                 serializer.Serialize(writer, objectToSerialize, namespaces);
-                serializedString = stringWriter.ToString();
+                return stringWriter.ToString();
             }
             catch
             {
-                // ignored
+                return string.Empty;
             }
-            return serializedString;
         }
 
         public T Deserialize<T>(string stringToDeserialize)
         {
-            var obj = default(T);
             try
             {
-                obj = (T)new XmlSerializer(typeof(T)).
+                return (T)new XmlSerializer(typeof(T)).
                     Deserialize(new StringReader(stringToDeserialize));
             }
             catch
             {
-                // ignored
+                return default(T);
             }
-            return obj;
         }
     }
 }

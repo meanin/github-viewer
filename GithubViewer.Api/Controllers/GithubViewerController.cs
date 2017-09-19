@@ -16,19 +16,20 @@ namespace GithubViewer.Api.Controllers
     /// <summary>
     /// Gets informations from Github Api
     /// </summary>
+    [Authorize]
     [RoutePrefix("api/githubviewer")]
     public class GithubViewerController : ApiController
     {
-        private readonly IGithubApiService _controllerService;
+        private readonly IGithubApiService _githubService;
 
         /// <inheritdoc />
         /// <summary>
         /// Ctor for controller
         /// </summary>
-        /// <param name="controllerService">Service which connects to Github Api</param>
-        public GithubViewerController(IGithubApiService controllerService)
+        /// <param name="githubService">Service which connects to Github Api</param>
+        public GithubViewerController(IGithubApiService githubService)
         {
-            _controllerService = controllerService;
+            _githubService = githubService;
         }
 
         /// <summary>
@@ -40,6 +41,7 @@ namespace GithubViewer.Api.Controllers
         /// <param name="login">Github User login from url</param>
         /// <returns>Github User information</returns>
         /// <response code="200">Returns Github user information</response>
+        /// <response code="401">Unauthorized</response>
         /// <response code="404">Github User not found</response>
         [Route("user/{login}")]
         [ResponseType(typeof(GithubUser))]
@@ -48,7 +50,7 @@ namespace GithubViewer.Api.Controllers
         public IHttpActionResult GetUser(string login)
         {
             Log.Verbose("Received get user reuqest with login: {login}", login);
-            var model = _controllerService.GetUser(login);
+            var model = _githubService.GetUser(login);
             if (model != GithubUser.NullUser)
                 return Ok(model);
             Log.Warning("User not found", login);
@@ -64,6 +66,7 @@ namespace GithubViewer.Api.Controllers
         /// <param name="login">Github User login from url</param>
         /// <returns>Github User repositories list</returns>
         /// <response code="200">Returns Github user repositories list</response>
+        /// <response code="401">Unauthorized</response>
         /// <response code="404">Github User not found</response>
         [Route("repository/{login}")]
         [ResponseType(typeof(IEnumerable<GithubRepositoryDetails>))]
@@ -72,7 +75,7 @@ namespace GithubViewer.Api.Controllers
         public IHttpActionResult GetUsersRepositories(string login)
         {
             Log.Verbose("Received get users repositories reuqest with login: {login}", login);
-            var model = _controllerService.GetUser(login);
+            var model = _githubService.GetUser(login);
             if (model == GithubUser.NullUser)
             {
                 Log.Warning("User not found");
@@ -80,7 +83,7 @@ namespace GithubViewer.Api.Controllers
             }
 
             var repositoriesList = model.RepositoryList
-                .Select(repository => _controllerService.GetRepositoryDetails(login, repository.Name));
+                .Select(repository => _githubService.GetRepositoryDetails(login, repository.Name));
             return Ok(repositoriesList);
         }
 
@@ -94,6 +97,7 @@ namespace GithubViewer.Api.Controllers
         /// <param name="repository">Github User repository name from url</param>
         /// <returns>Github Users repository information</returns>
         /// <response code="200">Returns Github users repository information</response>
+        /// <response code="401">Unauthorized</response>
         /// <response code="404">Github User or repository not found</response>
         [Route("repository/{login}/{repository}")]
         [ResponseType(typeof(GithubRepositoryDetails))]
@@ -102,7 +106,7 @@ namespace GithubViewer.Api.Controllers
         public IHttpActionResult GetRepositoryDetails(string login, string repository)
         {
             Log.Verbose("Received get users repository reuqest with login: {login} and repository name: {repository}", login, repository);
-            var model = _controllerService.GetRepositoryDetails(login, repository);
+            var model = _githubService.GetRepositoryDetails(login, repository);
             if (model != GithubRepositoryDetails.NullDetails)
                 return Ok(model);
             Log.Verbose("User or given repository not found");

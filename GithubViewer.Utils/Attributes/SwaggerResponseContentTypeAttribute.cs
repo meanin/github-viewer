@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Linq;
-using System.Web.Http.Description;
-using Swashbuckle.Swagger;
 
 namespace GithubViewer.Utils.Attributes
 {
@@ -25,19 +22,5 @@ namespace GithubViewer.Utils.Attributes
         /// Response Content Type
         /// </summary>
         public string ResponseType { get; }
-    }
-
-    public class ResponseContentTypeOperationFilter : IOperationFilter
-    {
-        public void Apply(Operation operation, SchemaRegistry schemaRegistry, ApiDescription apiDescription)
-        {
-            var requestAttributes = apiDescription.GetControllerAndActionAttributes<SwaggerResponseContentTypeAttribute>().FirstOrDefault();
-            if (requestAttributes == null)
-                return;
-
-            var responseType = requestAttributes.ResponseType;
-            if(!operation.produces.Contains(responseType))
-                operation.produces.Add(responseType);
-        }
     }
 }

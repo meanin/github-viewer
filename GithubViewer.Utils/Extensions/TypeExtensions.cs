@@ -9,9 +9,7 @@ namespace GithubViewer.Utils.Extensions
     public static class TypeExtensions
     {
         /// <summary>
-#pragma warning disable 1570
-        /// Check if type is T or IEnumerable<T>
-#pragma warning restore 1570
+        /// Check if given type is type of T
         /// </summary>
         /// <typeparam name="T">Type</typeparam>
         /// <param name="type">Type object</param>

@@ -9,6 +9,8 @@ In this project used are:
 * ASP.net
 * MVC 5
 * WebAPI2
+* Identity Server 3
+* Owin
 * Unity IoC
 * Swashbuckle
 * Swashbuckle.Examples (https://github.com/mattfrear/Swashbuckle.Examples)

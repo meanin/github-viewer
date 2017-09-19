@@ -1,6 +1,6 @@
 using System.Web.Http;
 using Swashbuckle.Application;
-using GithubViewer.Utils.Attributes;
+using GithubViewer.Utils.OperationFilter;
 using Swashbuckle.Examples;
 
 namespace GithubViewer.Api
@@ -13,7 +13,9 @@ namespace GithubViewer.Api
         /// <summary>
         /// Registering swagger components
         /// </summary>
-        public static void Register()
+        /// <param name="xmlPath">Path to xml documentation file</param>
+        /// <param name="authorityUrl">Identity server url</param>
+        public static void Register(string xmlPath, string authorityUrl)
         {
             var thisAssembly = typeof(SwaggerConfig).Assembly;
 
@@ -21,10 +23,18 @@ namespace GithubViewer.Api
                 .EnableSwagger(c =>
                     {
                         c.SingleApiVersion("v1", "GithubViewer.Api");
-                        c.IncludeXmlComments(string.Format(@"{0}\bin\SwaggerGithubViewerApi.xml",
-                            System.AppDomain.CurrentDomain.BaseDirectory));
-                        c.OperationFilter<ResponseContentTypeOperationFilter>();
+                        c.IncludeXmlComments(xmlPath);
+
                         c.OperationFilter<ExamplesOperationFilter>();
+                        c.OperationFilter<AuthorizationHeaderFilter>();
+                        c.OperationFilter<AssignOAuth2SecurityRequirements>();
+                        c.OperationFilter<ResponseContentTypeOperationFilter>();
+
+                        c.OAuth2("oauth2")
+                            .Flow("application")
+                            .Scopes(s => s.Add("api", "Scope for swagger usage"))
+                            .TokenUrl($"{authorityUrl}/connect/token");
+
                         c.PrettyPrint();
                     })
                 .EnableSwaggerUi(c =>

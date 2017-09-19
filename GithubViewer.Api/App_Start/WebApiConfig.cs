@@ -11,7 +11,7 @@ namespace GithubViewer.Api
         /// <summary>
         /// Registering configuration for web api
         /// </summary>
-        /// <param name="config">HttpConfiguration</param>
+        /// <param name="config">Http Configuration</param>
         public static void Register(HttpConfiguration config)
         {
             // Web API configuration and services

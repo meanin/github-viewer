@@ -7,6 +7,10 @@ using Serilog;
 
 namespace GithubViewer.Utils.Handlers
 {
+    /// <inheritdoc />
+    /// <summary>
+    /// Logs http requests and produced responses
+    /// </summary>
     public sealed class LogMessageHandler : DelegatingHandler
     {
         private const string LogMessageString = "LogMessageHandler";

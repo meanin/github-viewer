@@ -61,7 +61,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="OperationFilter\ResponseContentTypeOperationFilter.cs" />
+    <Compile Include="OperationFilter\AssignOAuth2SecurityRequirements.cs" />
     <Compile Include="Attributes\SwaggerResponseContentTypeAttribute.cs" />
+    <Compile Include="OperationFilter\AuthorizationHeaderFilter.cs" />
     <Compile Include="Domain\IGithubApiService.cs" />
     <Compile Include="Domain\ISerializer.cs" />
     <Compile Include="Domain\IWebApiClient.cs" />

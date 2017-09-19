@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using GithubViewer.Utils.Domain;
 using GithubViewer.Utils.Services;
 using Xunit;
 
@@ -6,12 +7,12 @@ namespace GithubViewer.Utils.Tests
 {
     public class StringCacheTests
     {
-        private readonly StringCache _cache;
+        private readonly ICache<string> _cache;
         private readonly string _key;
 
         public StringCacheTests()
         {
-            _cache = new StringCache();
+            _cache = new SimpleInMemoryCache<string>();
             _key = "key";
         }
 
@@ -26,8 +27,7 @@ namespace GithubViewer.Utils.Tests
 
             // assert
 
-            stringObject.Should().NotBeNull();
-            stringObject.Should().BeEmpty();
+            stringObject.Should().BeNullOrEmpty();
         }
 
         [Fact]
@@ -35,7 +35,7 @@ namespace GithubViewer.Utils.Tests
         {
             // arrange
 
-            var obj = "object";
+            const string obj = "object";
             _cache.Put(_key, obj);
 
             // act

@@ -13,16 +13,14 @@ namespace GithubViewer.Utils.Services
 
         public T Deserialize<T>(string stringToDeserialize)
         {
-            var obj = default(T);
             try
             {
-                obj = JsonConvert.DeserializeObject<T>(stringToDeserialize);
+                return JsonConvert.DeserializeObject<T>(stringToDeserialize);
             }
             catch
             {
-                // ignored
+                return default(T);
             }
-            return obj;
         }
     }
 }

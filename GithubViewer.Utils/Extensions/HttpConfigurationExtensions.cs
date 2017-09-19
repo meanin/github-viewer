@@ -21,6 +21,10 @@ namespace GithubViewer.Utils.Extensions
             config.Formatters.Add(new GithubRepositoryDetailsCsvFormatter());
         }
 
+        /// <summary>
+        /// Adds Message Handler which log http requests and responses with headers and bodies
+        /// </summary>
+        /// <param name="config">Http Configuration</param>
         public static void AddLogMessageHandler(this HttpConfiguration config)
         {
             config.MessageHandlers.Add(new LogMessageHandler());

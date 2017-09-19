@@ -13,6 +13,8 @@ namespace GithubViewer.Api
         /// <param name="filters">Filters</param>
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
+            // require authentication for all controllers
+            filters.Add(new AuthorizeAttribute());
             filters.Add(new HandleErrorAttribute());
         }
     }

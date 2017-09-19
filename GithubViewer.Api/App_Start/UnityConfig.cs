@@ -20,18 +20,18 @@ namespace GithubViewer.Api
         /// <summary>
         /// Registering all needed components
         /// </summary>
-        public static void RegisterComponents()
+        /// <param name="httpLogPath">Where to store http logs</param>
+        /// <param name="controllerLogPath">Where to store controller logs</param>
+        /// <param name="githubApiUrl">Github Api url</param>
+        public static void RegisterComponents(string httpLogPath, string controllerLogPath, string githubApiUrl)
         {
 			var container = new UnityContainer();
 
-            container.RegisterInstance<ICache<string>>(new StringCache());
+            container.RegisterInstance<ICache<string>>(new SimpleInMemoryCache<string>());
             container.RegisterType<IGithubApiService, GithubApiService>();
             container.RegisterType<ISerializer, JsonSerializerService>();
-            var httpLogPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "httplogs", "log-{Date}.txt");
-            var logPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "logs", "log-{Date}.txt");
-            Log.Logger = CreateLogger(httpLogPath, logPath);
+            Log.Logger = CreateLogger(httpLogPath, controllerLogPath);
 
-            var githubApiUrl = WebConfigurationManager.AppSettings.Get("GithubApiUrl") ?? string.Empty;
             container.RegisterType<IWebApiClient, WebApiClientService>
                 (new InjectionConstructor(githubApiUrl, 
                     container.Resolve<ICache<string>>()));
@@ -41,12 +41,16 @@ namespace GithubViewer.Api
 
         private static Logger CreateLogger(string httpLogPath, string logPath)
         {
-            return new LoggerConfiguration().MinimumLevel.Verbose()
-                .WriteTo.Logger(l => l.Filter.ByIncludingOnly(e => e.Properties.ContainsKey("LogMessageHandler"))
-                    .WriteTo.RollingFile(httpLogPath, LogEventLevel.Verbose))
-                .WriteTo.Logger(l => l.Filter.ByExcluding(e => e.Properties.ContainsKey("LogMessageHandler"))
-                    .WriteTo.RollingFile(logPath, LogEventLevel.Verbose))
-                .CreateLogger();
+            var loggerConfiguration = new LoggerConfiguration().MinimumLevel.Verbose();
+
+            if(!string.IsNullOrEmpty(httpLogPath))
+                loggerConfiguration.WriteTo.Logger(l => l.Filter.ByIncludingOnly(e => e.Properties.ContainsKey("LogMessageHandler"))
+                    .WriteTo.RollingFile(httpLogPath, LogEventLevel.Verbose));
+            if (!string.IsNullOrEmpty(logPath))
+                loggerConfiguration.WriteTo.Logger(l => l.Filter.ByExcluding(e => e.Properties.ContainsKey("LogMessageHandler"))
+                    .WriteTo.RollingFile(logPath, LogEventLevel.Verbose));
+                
+            return loggerConfiguration.CreateLogger();
         }
     }
 }

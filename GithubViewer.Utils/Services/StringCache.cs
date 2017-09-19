@@ -3,21 +3,23 @@ using GithubViewer.Utils.Domain;
 
 namespace GithubViewer.Utils.Services
 {
-    public class StringCache  : ICache<string>
+    public class SimpleInMemoryCache<T> : ICache<T>
     {
-        private readonly Dictionary<string, string> _cache;
+        private readonly Dictionary<string, T> _cache;
 
-        public StringCache()
+        public SimpleInMemoryCache()
         {
-            _cache = new Dictionary<string, string>();
+            _cache = new Dictionary<string, T>();
         }
 
-        public string Get(string method)
+        public T Get(string method)
         {
-            return !_cache.ContainsKey(method) ? string.Empty : _cache[method];
+            return !_cache.ContainsKey(method) 
+                ? default(T) 
+                : _cache[method];
         }
 
-        public void Put(string key, string objectToStore)
+        public void Put(string key, T objectToStore)
         {
             _cache[key] = objectToStore;
         }

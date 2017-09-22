@@ -24,10 +24,10 @@
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                    <li>@Html.ActionLink("Github Viewer", "Index", "GithubViewer")</li>
+                    <li>@Html.ActionLink("Github Viewer", "Github", "Home")</li>
                     @if (User.Identity.IsAuthenticated)
                     {
-                        <li><a href="http://localhost:60000/logout">Logout</a></li>
+                        <li>@Html.ActionLink("Logout", "Logout", "Home")</li>
                     }
                     <li><a href="http://localhost:50000/swagger/ui/index" target="_blank">Swagger UI</a></li>
                 </ul>
@@ -38,7 +38,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>@DateTime.Now.Year - <a href="mailto:meanin@wp.pl">meanin</a></p>
+            <p>@DateTime.Now.Year - GithubViewer, mailto: <a href="mailto:meanin@wp.pl">meanin</a></p>
         </footer>
     </div>
 

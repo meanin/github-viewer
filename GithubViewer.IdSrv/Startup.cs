@@ -22,12 +22,7 @@ namespace GithubViewer.IdSrv
                 .WriteTo.RollingFile(logPath)
                 .CreateLogger();
             
-            FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
-            RouteConfig.RegisterRoutes(RouteTable.Routes);
-            BundleConfig.RegisterBundles(BundleTable.Bundles);
             IdSrvConfig.Configure(app);
-
-            app.UseWebApi(GlobalConfiguration.Configuration);
         }
     }
 }

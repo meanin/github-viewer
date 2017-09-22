@@ -51,27 +51,11 @@ namespace GithubViewer.IdSrv.Config
                         "roles",
                         "api"
                     },
-                    AllowedCorsOrigins = new List<string>{ "http://localhost:40000/" }
-                },
-                //new Client
-                //{
-                //    ClientName = "GithubViewerWeb",
-                //    ClientId = "web",
-                //    Enabled = true,
-                //    AccessTokenType = AccessTokenType.Reference,
-
-                //    Flow = Flows.Hybrid,
-
-                //    ClientSecrets = new List<Secret>
-                //    {
-                //        new Secret("websecret".Sha256())
-                //    },
-
-                //    AllowedScopes = new List<string>
-                //    {
-                //        "api"
-                //    }
-                //},
+                    AllowedCorsOrigins = new List<string>
+                    {
+                        "http://localhost:40000/"
+                    }
+                }
             };
         }
     }

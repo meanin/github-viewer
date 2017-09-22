@@ -8,9 +8,7 @@ namespace GithubViewer.IdSrv.Config
     {
         public static X509Certificate2 LoadCertificate()
         {
-            var filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"App_Data\githubviewer.idsrv.pfx");
-            var password = "githubviewertest";
-            return new X509Certificate2(filePath, password);
+            return new X509Certificate2(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"App_Data\githubviewer.idsrv.pfx"), "githubviewertest");
         }
     }
 }

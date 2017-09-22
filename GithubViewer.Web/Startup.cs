@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System.Web.Configuration;
+using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using Microsoft.Owin;
@@ -11,10 +12,14 @@ namespace GithubViewer.Web
     {
         public void Configuration(IAppBuilder app)
         {
+            var authorityUrl = WebConfigurationManager.AppSettings.Get("AuthorityUrl") ?? string.Empty;
+            var mvcUrl = WebConfigurationManager.AppSettings.Get("MvcUrl") ?? string.Empty;
+
+
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-            AuthConfig.Configure(app);
+            AuthConfig.Configure(app, authorityUrl, mvcUrl);
         }
     }
 }

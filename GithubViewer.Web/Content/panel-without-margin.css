@@ -1,0 +1,6 @@
+﻿html, body {
+    height: 100%;
+}
+.panel.without-margin {
+    margin-bottom: 0px;
+}

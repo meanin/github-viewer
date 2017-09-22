@@ -1,0 +1,25 @@
+{
+  "name": "Flex",
+  "description": "CSS Grid which uses flexbox under the hood, and provides a simple CSS class-based API for rapidly building fluid/responsive webpage layouts on a 12 column grid.",
+  "main": "dist/flex.min.css",
+  "authors": [
+    "Ryan Gray <ryan.is.gray@gmail.com>"
+  ],
+  "license": "WTFPL",
+  "keywords": [
+    "flex",
+    "flexbox",
+    "grid",
+    "responsive",
+    "layout"
+  ],
+  "moduleType": [],
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

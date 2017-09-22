@@ -1,7 +1,10 @@
 ﻿using System;
 using System.IO;
-using GithubViewer.IdSrv.Config;
-using IdentityServer3.Core.Configuration;
+using System.Web.Http;
+using System.Web.Mvc;
+using System.Web.Optimization;
+using System.Web.Routing;
+using GithubViewer.IdSrv.App_Start;
 using Microsoft.Owin;
 using Owin;
 using Serilog;
@@ -18,23 +21,13 @@ namespace GithubViewer.IdSrv
             Log.Logger = new LoggerConfiguration().MinimumLevel.Verbose()
                 .WriteTo.RollingFile(logPath)
                 .CreateLogger();
+            
+            FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
+            RouteConfig.RegisterRoutes(RouteTable.Routes);
+            BundleConfig.RegisterBundles(BundleTable.Bundles);
+            IdSrvConfig.Configure(app);
 
-            var options = new IdentityServerOptions
-            {
-                Factory = new IdentityServerServiceFactory()
-                    .UseInMemoryClients(Clients.Get())
-                    .UseInMemoryScopes(Scopes.Get())
-                    .UseInMemoryUsers(Users.Get()),
-                LoggingOptions = new LoggingOptions
-                {
-                    EnableHttpLogging = true,
-                    EnableWebApiDiagnostics = true,
-                    WebApiDiagnosticsIsVerbose = true
-                },
-                RequireSsl = false
-            };
-
-            app.UseIdentityServer(options);
+            app.UseWebApi(GlobalConfiguration.Configuration);
         }
     }
 }

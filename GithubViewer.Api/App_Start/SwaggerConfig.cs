@@ -1,6 +1,6 @@
 using System.Web.Http;
 using Swashbuckle.Application;
-using GithubViewer.Utils.OperationFilter;
+using GithubViewer.Swashbuckle.OperationFilters;
 using Swashbuckle.Examples;
 
 namespace GithubViewer.Api
@@ -27,7 +27,7 @@ namespace GithubViewer.Api
 
                         c.OperationFilter<ExamplesOperationFilter>();
                         c.OperationFilter<AuthorizationHeaderFilter>();
-                        c.OperationFilter<AssignOAuth2SecurityRequirements>();
+                        c.OperationFilter<OAuth2SecurityFilter>();
                         c.OperationFilter<ResponseContentTypeOperationFilter>();
 
                         c.OAuth2("oauth2")

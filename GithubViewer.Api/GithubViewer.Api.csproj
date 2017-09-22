@@ -246,6 +246,10 @@
       <Project>{8d6d3148-ec70-4566-abd9-c8ebfd065648}</Project>
       <Name>GithubViewer.Models</Name>
     </ProjectReference>
+    <ProjectReference Include="..\GithubViewer.Swashbuckle\GithubViewer.Swashbuckle.csproj">
+      <Project>{a90ad1bd-1b6e-40ba-9f25-7a8ba47ee42b}</Project>
+      <Name>GithubViewer.Swashbuckle</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GithubViewer.Utils\GithubViewer.Utils.csproj">
       <Project>{cd3d733c-ddb9-4aab-9e5d-6bbc12db5d63}</Project>
       <Name>GithubViewer.Utils</Name>

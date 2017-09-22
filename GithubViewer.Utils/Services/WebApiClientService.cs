@@ -25,7 +25,7 @@ namespace GithubViewer.Utils.Services
         public string Get(string method)
         {
             var cachedObject = _cache.Get(method);
-            if (cachedObject != string.Empty)
+            if (!string.IsNullOrEmpty(cachedObject))
                 return cachedObject;
 
             var result = GetMethodContentResult(method);

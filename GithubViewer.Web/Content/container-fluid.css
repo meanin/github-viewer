@@ -1,0 +1,14 @@
+﻿html, body {
+    height: 100%;
+}
+.container-fluid,
+.row-fluid {
+    /*height: inherit;*/
+}
+.col-fluid-main {
+    height: 100%;
+    min-height: 100%;
+}
+.col-fluid-sub {
+    min-height: 100%;
+}

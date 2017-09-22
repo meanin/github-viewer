@@ -1,0 +1,127 @@
+*, *:before, *:after { @include box-sizing(border-box); }
+
+.grid {
+  display: flex;
+  display: -webkit-flex;
+  @include justify-content(flex-start);
+  @include flex-wrap(wrap);
+  padding: $pad 0 $pad $pad;
+  @include flex-direction(row);
+
+  & > [class*="span-"] {
+    @include flex-order(12);
+    @include flex-grow(0);
+    @include flex-shrink(0);
+    @include flex-basis(auto);
+    padding-right: $pad;
+  }
+
+  &.no-pad {
+    padding: 0;
+    & > [class*='span-'] {
+      padding-right: 0;
+    }
+  }
+
+  &.inline {
+    display: inline-flex;
+    display: -webkit-inline-flex;
+  }
+
+  &.wrap { @include flex-wrap(wrap); }
+  &.wrap-reverse { @include flex-wrap(wrap-reverse); }
+  &.no-wrap { @include flex-wrap(nowrap); }
+
+  &.reverse { @include flex-direction(row-reverse); }
+
+  &.stack {
+    @include flex-direction(column);
+    &.reverse {
+      @include flex-direction(column-reverse);
+    }
+  }
+
+  &.justify-center { @include justify-content(center); }
+  &.justify-start { @include justify-content(flex-start); }
+  &.justify-end { @include justify-content(flex-end); }
+  &.justify-space-around { @include justify-content(space-around); }
+  &.justify-space-between { @include justify-content(space-between); }
+
+  &.align-baseline { align-items: baseline; }
+  &.align-center { align-items: center; }
+  &.align-start { align-items: flex-start; }
+  &.align-end { align-items: flex-end; }
+  &.align-stretch { align-items: stretch; }
+
+  & > .align-auto { align-self: auto; }
+  & > .align-baseline { align-self: baseline; }
+  & > .align-center { align-self: center; }
+  & > .align-start { align-self: flex-start; }
+  & > .align-end { align-self: flex-end; }
+  & > .align-stretch { align-self: stretch; }
+
+  @for $i from 1 through 12 {
+    $off: $i - 1;
+    & > .span-#{$i} { @include flex-basis($i / 12 * 100%); }
+    & > .offset-#{$off} { margin-left: (($i - 1) / 12) * 100%; }
+    & > .offset-#{$off}-right#{$i} { margin-left: (($i - 1) / 12) * 100%; }
+    & > .order-#{$i} { @include flex-order($i); }
+    & > .grow-#{$i} { @include flex-grow($i); }
+    & > .shrink-#{$i} { @include flex-shrink($i); }
+  }
+}
+
+
+$breakpoints: $break-min-xs 'xs', $break-min-sm 'sm', $break-min-md 'md', $break-min-lg 'lg', $break-min-xl 'xl';
+@each $break in $breakpoints {
+  @media all and (min-width: nth($break, 1)) {
+    .grid {
+        &.row-#{nth($break, 2)} {
+        @include flex-direction(row);
+        &.reverse-#{nth($break, 2)} {
+          @include flex-direction(row-reverse);
+        }
+      }
+
+      &.stack-#{nth($break, 2)} {
+        @include flex-direction(column);
+        &.reverse-#{nth($break, 2)} {
+          @include flex-direction(column-reverse);
+        }
+      }
+
+      &.wrap-#{nth($break, 2)} { @include flex-wrap(wrap); }
+      &.wrap-reverse-#{nth($break, 2)} { @include flex-wrap(wrap-reverse); }
+      &.no-wrap-#{nth($break, 2)} { @include flex-wrap(nowrap); }
+
+      &.justify-center-#{nth($break, 2)} { @include justify-content(center); }
+      &.justify-start-#{nth($break, 2)} { @include justify-content(flex-start); }
+      &.justify-end-#{nth($break, 2)} { @include justify-content(flex-end); }
+      &.justify-space-around-#{nth($break, 2)} { @include justify-content(space-around); }
+      &.justify-space-between-#{nth($break, 2)} { @include justify-content(space-between); }
+
+      &.align-baseline-#{nth($break, 2)} { align-items: baseline; }
+      &.align-center-#{nth($break, 2)} { align-items: center; }
+      &.align-start-#{nth($break, 2)} { align-items: flex-start; }
+      &.align-end-#{nth($break, 2)} { align-items: flex-end; }
+      &.align-stretch-#{nth($break, 2)} { align-items: stretch; }
+
+      & > .align-auto-#{nth($break, 2)} { align-self: auto; }
+      & > .align-baseline-#{nth($break, 2)} { align-self: baseline; }
+      & > .align-center-#{nth($break, 2)} { align-self: center; }
+      & > .align-start-#{nth($break, 2)} { align-self: flex-start; }
+      & > .align-end-#{nth($break, 2)} { align-self: flex-end; }
+      & > .align-stretch-#{nth($break, 2)} { align-self: stretch; }
+
+      @for $i from 1 through 12 {
+        $off: $i - 1;
+        & > .span-#{$i}-#{nth($break, 2)} { @include flex-basis($i / 12 * 100%); }
+        & > .offset-#{$off}-#{nth($break, 2)} { margin-left: (($i - 1) / 12) * 100%; }
+        & > .offset-#{$off}-right-#{nth($break, 2)} { margin-left: (($i - 1) / 12) * 100%; }
+        & > .order-#{$i}-#{nth($break, 2)} { @include flex-order($i); }
+        & > .grow-#{$i}-#{nth($break, 2)} { @include flex-grow($i); }
+        & > .shrink-#{$i}-#{nth($break, 2)} { @include flex-shrink($i); }
+      }
+    }
+  }
+}

@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Security.Claims;
+using IdentityServer3.Core;
 using IdentityServer3.Core.Services.InMemory;
 
 namespace GithubViewer.IdSrv.Config
@@ -13,7 +15,13 @@ namespace GithubViewer.IdSrv.Config
                 {
                     Username = "developer",
                     Password = "password",
-                    Subject = "1"
+                    Subject = "1",
+
+                    Claims = new[]
+                    {
+                        new Claim(Constants.ClaimTypes.GivenName, "developer"),
+                        new Claim(Constants.ClaimTypes.Role, "rw")
+                    }
                 }
             };
         }

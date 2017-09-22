@@ -20,30 +20,58 @@ namespace GithubViewer.IdSrv.Config
                     Flow = Flows.ClientCredentials,
                     AllowClientCredentialsOnly = true,
                     ClientSecrets = new List<Secret> { new Secret("secret".Sha256()) },
-                    AllowedScopes = new List<string> { "api" }, 
+                    AllowedScopes = new List<string> { "api" },
                     AllowedCorsOrigins = new List<string>{ "http://localhost:50000/" }
                 },
 
-                // human is involved
+                //// human is involved
                 new Client
                 {
                     ClientName = "GithubViewerWeb",
                     ClientId = "web",
                     Enabled = true,
-                    AccessTokenType = AccessTokenType.Reference,
+                    Flow = Flows.Implicit,
 
-                    Flow = Flows.ResourceOwner,
-
+                    RedirectUris = new List<string>
+                    {
+                        "http://localhost:40000/"
+                    },
+                    PostLogoutRedirectUris = new List<string>
+                    {
+                        "http://localhost:40000/"
+                    },
                     ClientSecrets = new List<Secret>
                     {
                         new Secret("websecret".Sha256())
                     },
-
                     AllowedScopes = new List<string>
                     {
+                        "openid",
+                        "profile",
+                        "roles",
                         "api"
-                    }
-                }
+                    },
+                    AllowedCorsOrigins = new List<string>{ "http://localhost:40000/" }
+                },
+                //new Client
+                //{
+                //    ClientName = "GithubViewerWeb",
+                //    ClientId = "web",
+                //    Enabled = true,
+                //    AccessTokenType = AccessTokenType.Reference,
+
+                //    Flow = Flows.Hybrid,
+
+                //    ClientSecrets = new List<Secret>
+                //    {
+                //        new Secret("websecret".Sha256())
+                //    },
+
+                //    AllowedScopes = new List<string>
+                //    {
+                //        "api"
+                //    }
+                //},
             };
         }
     }

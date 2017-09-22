@@ -5,7 +5,7 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using GithubViewer.Models;
 using GithubViewer.Models.Examples;
-using GithubViewer.Utils.Attributes;
+using GithubViewer.Swashbuckle.Attributes;
 using GithubViewer.Utils.Domain;
 using Serilog;
 using Swashbuckle.Examples;

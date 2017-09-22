@@ -1,0 +1,25 @@
+{
+  "name": "flex-sass",
+  "version": "4.0.1",
+  "description": "The Flex CSS grid, written in SASS, and available to you in this package.",
+  "main": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "WTFPL",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rdgd/Flex.git"
+  },
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-cli": "^0.1.13",
+    "grunt-contrib-cssmin": "^0.14.0",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-sass": "^1.1.0",
+    "sass-commons": "^2.0.0",
+    "sass-helper-classes": "^3.0.1"
+  }
+}

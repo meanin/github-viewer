@@ -7,10 +7,36 @@ namespace GithubViewer.IdSrv.Config
     {
         public static List<Scope> Get()
         {
-            return new List<Scope>
+            var scopes = new List<Scope>
             {
-                new Scope { Name = "api", Type = ScopeType.Resource}
+                new Scope
+                {
+                    Enabled = true,
+                    Name = "roles",
+                    Type = ScopeType.Identity,
+                    Claims = new List<ScopeClaim>
+                    {
+                        new ScopeClaim("role")
+                    }
+                },
+                new Scope
+                {
+                    Enabled = true,
+                    DisplayName = "GithubViewer API",
+                    Name = "api",
+                    Description = "Access to a GithubViewer API",
+                    Type = ScopeType.Resource,
+
+                    Claims = new List<ScopeClaim>
+                    {
+                        new ScopeClaim("role")
+                    }
+                }
             };
+
+            scopes.AddRange(StandardScopes.All);
+
+            return scopes;
         }
     }
 }

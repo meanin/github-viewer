@@ -1,6 +1,6 @@
 ﻿using GithubViewer.Models;
 
-namespace GithubViewer.Utils.Domain
+namespace GithubViewer.Utils.Contract
 {
     /// <summary>
     /// Interface for geting information from Github API

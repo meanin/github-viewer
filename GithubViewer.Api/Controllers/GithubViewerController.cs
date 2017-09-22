@@ -6,7 +6,7 @@ using System.Web.Http.Description;
 using GithubViewer.Models;
 using GithubViewer.Models.Examples;
 using GithubViewer.Swashbuckle.Attributes;
-using GithubViewer.Utils.Domain;
+using GithubViewer.Utils.Contract;
 using Serilog;
 using Swashbuckle.Examples;
 
@@ -20,16 +20,16 @@ namespace GithubViewer.Api.Controllers
     [RoutePrefix("api/githubviewer")]
     public class GithubViewerController : ApiController
     {
-        private readonly IGithubApiService _githubService;
+        private readonly IGithubApiService _githubApiService;
 
         /// <inheritdoc />
         /// <summary>
         /// Ctor for controller
         /// </summary>
-        /// <param name="githubService">Service which connects to Github Api</param>
-        public GithubViewerController(IGithubApiService githubService)
+        /// <param name="githubApiService">Service which connects to Github Api</param>
+        public GithubViewerController(IGithubApiService githubApiService)
         {
-            _githubService = githubService;
+            _githubApiService = githubApiService;
         }
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace GithubViewer.Api.Controllers
         public IHttpActionResult GetUser(string login)
         {
             Log.Verbose("Received get user reuqest with login: {login}", login);
-            var model = _githubService.GetUser(login);
+            var model = _githubApiService.GetUser(login);
             if (model != GithubUser.NullUser)
                 return Ok(model);
             Log.Warning("User not found", login);
@@ -75,7 +75,7 @@ namespace GithubViewer.Api.Controllers
         public IHttpActionResult GetUsersRepositories(string login)
         {
             Log.Verbose("Received get users repositories reuqest with login: {login}", login);
-            var model = _githubService.GetUser(login);
+            var model = _githubApiService.GetUser(login);
             if (model == GithubUser.NullUser)
             {
                 Log.Warning("User not found");
@@ -83,7 +83,7 @@ namespace GithubViewer.Api.Controllers
             }
 
             var repositoriesList = model.RepositoryList
-                .Select(repository => _githubService.GetRepositoryDetails(login, repository.Name));
+                .Select(repository => _githubApiService.GetRepositoryDetails(login, repository.Name));
             return Ok(repositoriesList);
         }
 
@@ -106,7 +106,7 @@ namespace GithubViewer.Api.Controllers
         public IHttpActionResult GetRepositoryDetails(string login, string repository)
         {
             Log.Verbose("Received get users repository reuqest with login: {login} and repository name: {repository}", login, repository);
-            var model = _githubService.GetRepositoryDetails(login, repository);
+            var model = _githubApiService.GetRepositoryDetails(login, repository);
             if (model != GithubRepositoryDetails.NullDetails)
                 return Ok(model);
             Log.Verbose("User or given repository not found");

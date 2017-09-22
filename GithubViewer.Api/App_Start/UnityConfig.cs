@@ -1,13 +1,13 @@
 using System.Web.Configuration;
 using Microsoft.Practices.Unity;
 using System.Web.Http;
-using GithubViewer.Utils.Domain;
 using GithubViewer.Utils.Services;
 using Unity.WebApi;
 using Serilog;
 using Serilog.Events;
 using System.IO;
 using System;
+using GithubViewer.Utils.Contract;
 using Serilog.Core;
 
 namespace GithubViewer.Api
@@ -29,9 +29,9 @@ namespace GithubViewer.Api
 
             container.RegisterInstance<ICache<string>>(new SimpleInMemoryCache<string>());
             container.RegisterType<IGithubApiService, GithubApiService>();
-            container.RegisterType<ISerializer, JsonSerializerService>();
             Log.Logger = CreateLogger(httpLogPath, controllerLogPath);
 
+            container.RegisterType<ISerializer, JsonSerializerService>();
             container.RegisterType<IWebApiClient, WebApiClientService>
                 (new InjectionConstructor(githubApiUrl, 
                     container.Resolve<ICache<string>>()));

@@ -1,4 +1,4 @@
-﻿using GithubViewer.Utils.Domain;
+﻿using GithubViewer.Utils.Contract;
 using GithubViewer.Utils.Services;
 using NSubstitute;
 using Xunit;

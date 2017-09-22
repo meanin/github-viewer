@@ -1,0 +1,25 @@
+﻿@model GithubViewer.Models.GithubUser
+    
+<h1>Selected user:</h1>
+
+<div class="container">
+    <div>
+        <h3>Login @Model.Login</h3>
+        <p>Location: @Model.Location</p>
+        @if (!string.IsNullOrEmpty(Model.BlogUrl))
+        {
+            <a href="@Model.BlogUrl">Users blog</a>
+        }
+    </div>
+    <div>
+        <img src="@Model.AvatarUrl" alt=""/>
+    </div>
+    <div>
+        <ul>
+            @foreach (var repo in Model.RepositoryList)
+            {
+                <li>@repo.Name <span class="glyphicon glyphicon-star"></span> : @repo.StargazesCount</li>
+            }
+        </ul>
+    </div>
+</div>

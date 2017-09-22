@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using GithubViewer.Utils.Domain;
+using GithubViewer.Utils.Contract;
 
 namespace GithubViewer.Utils.Services
 {

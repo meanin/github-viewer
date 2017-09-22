@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Net.Http;
-using GithubViewer.Utils.Domain;
+using GithubViewer.Utils.Contract;
 
 namespace GithubViewer.Utils.Services
 {
@@ -22,23 +22,25 @@ namespace GithubViewer.Utils.Services
             }
         }
 
-        public string Get(string method)
+        public string Get(string method, string token = null)
         {
             var cachedObject = _cache.Get(method);
             if (!string.IsNullOrEmpty(cachedObject))
                 return cachedObject;
 
-            var result = GetMethodContentResult(method);
+            var result = GetMethodContentResult(method, token);
             _cache.Put(method, result);
             return result;
         }
 
-        private string GetMethodContentResult(string method)
+        private string GetMethodContentResult(string method, string token)
         {
             using (var client = new HttpClient())
             {
                 var methodUri = new Uri(_webApiDomain, method);
                 client.DefaultRequestHeaders.Add("User-Agent", "*");
+                if (!string.IsNullOrEmpty(token))
+                    client.DefaultRequestHeaders.Add("Authorization", $"Bearer {token}");
                 var response = client.GetAsync(methodUri).Result;
                 return !response.IsSuccessStatusCode
                     ? string.Empty 

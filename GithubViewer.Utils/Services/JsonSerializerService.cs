@@ -1,4 +1,4 @@
-﻿using GithubViewer.Utils.Domain;
+﻿using GithubViewer.Utils.Contract;
 using Newtonsoft.Json;
 
 namespace GithubViewer.Utils.Services

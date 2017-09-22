@@ -1,4 +1,4 @@
-﻿namespace GithubViewer.Utils.Domain
+﻿namespace GithubViewer.Utils.Contract
 {
     /// <summary>
     /// Interface for text serialization

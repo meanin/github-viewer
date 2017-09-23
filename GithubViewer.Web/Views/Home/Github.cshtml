@@ -1,4 +1,6 @@
-﻿@using (Html.BeginForm("GetUserInfo", "Home", FormMethod.Post,
+﻿@model GithubViewer.Models.GithubUser 
+
+@using(Html.BeginForm("Github", "Home", FormMethod.Post,
     new {@class = "form-horizontal", role = "form"}))
 {
     <h1>Provide a user login:</h1>
@@ -11,10 +13,43 @@
         <div class="col-md-2">
             @Html.TextBox("Login", "meanin")
         </div>
+        @if (Model != null)
+        {
+            <div class="col-md-2">
+                <img src="@Model.AvatarUrl" alt="@Model.Login" width="200" height="200"/>
+            </div>
+        }
     </div>
     <div class="form-group">
         <div class="col-md-2 col-md-offset-3">
             <input type="submit" class="btn btn-default" value="Search"/>
+        </div>
+    </div>
+}
+
+@if (Model != null)
+{
+    <div class="container">
+        <div>
+            @if (!string.IsNullOrEmpty(Model.Login))
+            {
+                <p>Location: @Model.Location</p>
+            }
+            @if (!string.IsNullOrEmpty(Model.BlogUrl))
+            {
+                <a href="@Model.BlogUrl" target="_blank">Users blog</a>
+            }
+        </div>
+        <div>
+            <ul>
+                @foreach (var repo in Model.RepositoryList)
+                {
+                    <li>
+                        <div class="col-md-4 text-left">@repo.Name:</div>
+                        <div class="col-md-2 text-right">@repo.StargazesCount <span class="glyphicon glyphicon-star"></span></div>
+                    </li>
+                }
+            </ul>
         </div>
     </div>
 }

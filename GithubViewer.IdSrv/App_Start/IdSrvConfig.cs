@@ -1,5 +1,4 @@
-﻿using System;
-using GithubViewer.IdSrv.Config;
+﻿using GithubViewer.IdSrv.Config;
 using IdentityServer3.Core.Configuration;
 using Microsoft.Owin.Security.Google;
 using Owin;
@@ -40,13 +39,16 @@ namespace GithubViewer.IdSrv.App_Start
 
         private static void IdentityProviders(IAppBuilder app, string signInAsType)
         {
-            app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions
-            {
-                AuthenticationType = "Google",
-                SignInAsAuthenticationType = signInAsType,
-                ClientId = WebConfigurationManager.AppSettings.Get("GoogleClientId"),
-                ClientSecret = WebConfigurationManager.AppSettings.Get("GoogleClientSecret")
-            });
+            var googleClientId = WebConfigurationManager.AppSettings.Get("GoogleClientId");
+            var googleClientSecret = WebConfigurationManager.AppSettings.Get("GoogleClientSecret");
+            if(!string.IsNullOrEmpty(googleClientSecret) && !string.IsNullOrEmpty(googleClientSecret))
+                app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions
+                {
+                    AuthenticationType = "Google",
+                    SignInAsAuthenticationType = signInAsType,
+                    ClientId = googleClientId,
+                    ClientSecret = googleClientSecret
+                });
         }
     }
 }

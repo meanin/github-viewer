@@ -6,3 +6,20 @@
     <h1>Github Viewer</h1>
     <p class="lead">ASP.NET MVC and WebAPI2 application for user profile search and repositories listing</p>
 </div>
+<div>
+    <h3>Prerequisites:</h3>
+    <p>
+        To configure google OAuth2 authentication, you need to go to <a href="https://console.developers.google.com/">Google developer console</a> to section api,
+        Create a login data, for Client Id OAuth, set a redirect uri for this app into the local <b>Identity Server</b> (http://localhost:60000/signin-google), 
+        copy credentials and paste it into <b>Web.Config</b>. Two needed app settings are: <b>GoogleClientId</b> and <b>GoogleClientSecret</b>. 
+        Without these, application will still work, but without possibility to authenticate with google account.
+    </p>
+    <br/>
+    <p>
+        You can still log in with local <b>Identity Server</b> account. Credentials are:
+        <ul>
+            <li>Login: developer</li>
+            <li>Password: password</li>
+        </ul>
+    </p>
+</div>

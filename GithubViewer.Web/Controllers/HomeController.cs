@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Security.Claims;
+﻿using System.Security.Claims;
 using System.Web;
 using System.Web.Mvc;
 using GithubViewer.Models;
@@ -34,28 +33,18 @@ namespace GithubViewer.Web.Controllers
         }
 
         [Authorize]
-        public ActionResult Github()
+        public ActionResult Github(string login = "")
         {
-            // TODO: Try to get email, suggest to search for own repositories
-            //var email = Request.GetOwinContext().Authentication.User.Claims.SingleOrDefault(c => c.Type == "email")?.Value;
+            if(string.IsNullOrEmpty(login))
+                return View();
 
-            return View();
-        }
-
-        [Authorize]
-        [Route("User")]
-        [HttpPost]
-        public ActionResult GetUserInfo(string login)
-        {
             var token = (User as ClaimsPrincipal)?.FindFirst("access_token").Value;
             var model = _githubViewerApiService.GetUser(login, token);
-            if (model == GithubUser.NullUser)
-            {
-                ModelState.AddModelError("Login", "Login is not valid");
-                return View("Github");
-            }
+            if (model != GithubUser.NullUser)
+                return View(model);
 
-            return View(model);
+            ModelState.AddModelError("Login", "Login is not valid");
+            return View();
         }
 
         public ActionResult Logout()

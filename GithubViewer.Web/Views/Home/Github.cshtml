@@ -42,11 +42,11 @@
         </div>
         <div>
             <ul>
-                @foreach (var repo in Model.RepositoryList)
+                @foreach (var repo in Model.RepositoryList.OrderByDescending(s => s.StargazesCount).Take(5))
                 {
                     <li>
-                        <div class="col-md-4 text-left">@repo.Name:</div>
-                        <div class="col-md-2 text-right">@repo.StargazesCount <span class="glyphicon glyphicon-star"></span></div>
+                        <div class="col text-left">@repo.Name:</div>
+                        <div class="col text-right">@repo.StargazesCount <span class="glyphicon glyphicon-star"></span></div>
                     </li>
                 }
             </ul>

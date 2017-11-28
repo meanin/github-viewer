@@ -22,7 +22,7 @@ For use only restore nuget packages.
 
 
 
-# Task (from: https://github.com/sdesyllas/github-explorer/blob/master/README.md)
+# Task (from: [here](https://github.com/sdesyllas/github-explorer/blob/master/README.md))
 Create an ASP.Net MVC website with a page containing a text box to enter a name in and a submit button to search GitHub for the name.
 
 Have the back end call the GitHub users API (e.g. https://api.github.com/users/sdesyllas) and get the users name, location and avatar url from the returned json. Use the repos_url value to get a list of all the repos for the user.
